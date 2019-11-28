@@ -1,15 +1,10 @@
 use crate::cell::Cell;
 use crate::position::Position;
+use crate::position::Size;
 
 pub struct World {
     size: Size,
     cells: Vec<Cell>,
-}
-
-#[derive(Debug, Copy, Clone, PartialEq)]
-struct Size {
-    rows: usize,
-    columns: usize,
 }
 
 impl World {
@@ -45,30 +40,6 @@ impl World {
     fn get_cell(&self, position: Position) -> Option<&Cell> {
         self.cells.iter().find(|cell| cell.position == position)
     }
-
-    fn get_neighbors(&self, position: Position) -> Vec<&Cell> {
-        let one_less_x = position.x.checked_sub(1).unwrap_or(self.size.rows);
-        let one_less_y = position.y.checked_sub(1).unwrap_or(self.size.columns);
-
-        let positions: Vec<Position> = vec![
-            Position::new(one_less_x, one_less_y),
-            Position::new(one_less_x, position.y),
-            Position::new(one_less_x, position.y + 1),
-            Position::new(position.x, one_less_y),
-            Position::new(position.x, position.y + 1),
-            Position::new(position.x + 1, one_less_y),
-            Position::new(position.x + 1, position.y),
-            Position::new(position.x + 1, position.y + 1),
-        ]
-        .into_iter()
-        .filter(|p| p.x >= 0 && p.y >= 0)
-        .collect();
-
-        self.cells
-            .iter()
-            .filter(|cell| positions.contains(&cell.position))
-            .collect()
-    }
 }
 
 #[test]
@@ -100,31 +71,4 @@ fn should_initialize_with_alive_cells() {
         }),
         world.get_cell(position)
     )
-}
-
-#[test]
-fn should_return_neighbors_of_a_cell() {
-    let (rows, columns) = (3, 5);
-    let world = World::new(rows, columns);
-
-    let position = Position::new(1, 1);
-    let neighbors = world.get_neighbors(position);
-
-    assert_eq!(8, neighbors.len());
-}
-
-#[test]
-fn should_return_neighbors_of_cell_at_corner() {
-    let (rows, columns) = (3, 5);
-    let world = World::new(rows, columns);
-
-    let position = Position::new(0, 0);
-    let neighbors = world.get_neighbors(position);
-
-    assert_eq!(3, neighbors.len());
-
-    let position = Position::new(2, 4);
-    let neighbors = world.get_neighbors(position);
-
-    assert_eq!(3, neighbors.len());
 }
