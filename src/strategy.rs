@@ -1,7 +1,7 @@
 use crate::cell::Cell;
 use crate::position::Position;
 
-trait Strategy {
+pub trait Strategy {
     fn next_state(&self, neighbors: Vec<Cell>) -> Cell;
 }
 
