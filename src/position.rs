@@ -30,7 +30,7 @@ impl Position {
             Position::new(self.x + 1, self.y + 1),
         ]
         .into_iter()
-        .filter(|p| p.x >= 0 && p.x < bounds.rows && p.y >= 0 && p.y < bounds.columns)
+        .filter(|p| p.x < bounds.rows && p.y < bounds.columns)
         .collect()
     }
 }

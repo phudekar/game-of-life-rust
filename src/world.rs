@@ -23,13 +23,13 @@ impl World {
         }
     }
 
-    pub fn initialize(&mut self, aliveCellPositions: Vec<Position>) {
+    pub fn initialize(&mut self, alive_cell_positions: Vec<Position>) {
         self.cells = self
             .cells
             .iter()
             .map(|cell| {
                 let new_cell = Cell::new(cell.position.x, cell.position.y);
-                if aliveCellPositions.contains(&cell.position) {
+                if alive_cell_positions.contains(&cell.position) {
                     return new_cell.make_alive();
                 } else {
                     return new_cell;

@@ -22,7 +22,7 @@ fn main() {
 }
 
 fn print_world(world: &World) {
-    let cells: Vec<Cell> = (0..world.size.rows)
+    let _cells: Vec<Cell> = (0..world.size.rows)
         .flat_map(|x| {
             println!("");
             return (0..world.size.columns).map(move |y| {
