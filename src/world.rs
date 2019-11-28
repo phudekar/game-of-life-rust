@@ -4,12 +4,12 @@ use crate::position::Size;
 use crate::strategy::Strategy;
 
 pub struct World {
-    size: Size,
-    cells: Vec<Cell>,
+    pub size: Size,
+    pub cells: Vec<Cell>,
 }
 
 impl World {
-    fn new(rows: usize, columns: usize) -> World {
+    pub fn new(rows: usize, columns: usize) -> World {
         let cells = (0..rows)
             .flat_map(move |x| (0..columns).map(move |y| return Cell::new(x, y)))
             .collect();
@@ -23,7 +23,7 @@ impl World {
         }
     }
 
-    fn initialize(&mut self, aliveCellPositions: Vec<Position>) {
+    pub fn initialize(&mut self, aliveCellPositions: Vec<Position>) {
         self.cells = self
             .cells
             .iter()
@@ -38,11 +38,11 @@ impl World {
             .collect();
     }
 
-    fn get_cell(&self, position: Position) -> Option<&Cell> {
+    pub fn get_cell(&self, position: Position) -> Option<&Cell> {
         self.cells.iter().find(|cell| cell.position == position)
     }
 
-    fn next_gen(&self) -> World {
+    pub fn next_gen(&self) -> World {
         let cells = self
             .cells
             .iter()
